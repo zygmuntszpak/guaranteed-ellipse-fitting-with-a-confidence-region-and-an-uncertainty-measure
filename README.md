@@ -1,4 +1,4 @@
-# Guaranteed-ellipse-fitting-with-a-confidence-region-and-an-uncertainty-measure
+# Guaranteed Ellipse Fitting with a Confidence Region and an Uncertainty Measure for Centre, Axes and Orientation
 MATLAB implementation of Guaranteed ellipse fitting with a confidence region and an uncertainty measure for centre, axes, and orientation described in the publication:
 
 Z. L. Szpak, W. Chojnacki, and A. van den Hengel. 
