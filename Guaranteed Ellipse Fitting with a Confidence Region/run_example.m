@@ -232,9 +232,14 @@ pts = [xv; yv; ones(1,xres)];
 pts_normalised_space = T*pts;
 xv_normalised = pts_normalised_space(1,:);
 yv_normalised = pts_normalised_space(2,:);
+
 Z = compute_confidence_band(xv_normalised,yv_normalised,...
                          theta_guaranteed_covweightedNormalised, ...
                          thetaCovarianceMatrixNormalisedSpace,11.07);
+                     
+%  Z = compute_confidence_band(xv,yv,...
+%                          theta_fastguaranteed, ...
+%                          S,11.07);                    
 
 % this next step is a matlab hack to try to overlay the confidence
 % region over the existing plot. I don't know of a better way to do
@@ -436,7 +441,7 @@ for iPts = 1:length(data_points_eccentric)
     standardDevY = 1 + (6-1)*rand(1,1);
     covList{iPts} = diag([standardDevX^2, standardDevY^2]);
     perturbationX = standardDevX * randn(1,1);
-    perturbationY = standardDevX * randn(1,1);
+    perturbationY = standardDevY * randn(1,1);
     data_points_eccentric(iPts,:) = ...
         data_points_eccentric(iPts,:) + [perturbationX, perturbationY];    
 end
@@ -462,7 +467,9 @@ fprintf('Algebraic ellipse parameters of our method using \n')
 fprintf('specified data point covariance matrices: \n')
 [theta_guaranteed_covweighted] = ...
           fast_guaranteed_ellipse_estimate(data_points_eccentric,...
-                                                                  covList);       
+                                                                  covList);   
+
+  
 
 fprintf('Geometric ellipse parameters \n')
 fprintf('(majAxis, minAxis, xCenter,yCenter, orientation (radians)): \n') 
@@ -471,7 +478,7 @@ geometricEllipseParameters = ...
 
 fprintf('Covariance matrix of geometric parameters: \n')
 geoCov = compute_covariance_of_geometric_parameters(...
-                         theta_guaranteed_covweighted, data_points_portion)
+                         theta_guaranteed_covweighted, data_points_eccentric)
 
 fprintf('Standard deviation of geometric parameters: \n')                          
 stds = sqrt(diag(geoCov))                                                                  

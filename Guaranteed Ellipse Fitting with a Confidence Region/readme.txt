@@ -2,6 +2,7 @@ Guaranteed Ellipse Fitting with a Confidence Region and an Uncertainty
 Measure for Center, Axes, and Orientation 
 Zygmunt L Szpak (c) 2014 
 
+Version 2, 18 August 2017 
 Version 1, 25 September 2014 
 
 If you find this code useful in your research, please cite:
@@ -13,6 +14,28 @@ J. Math. Imaging Vision, 2015.
 http://dx.doi.org/10.1007/s10851-014-0536-x
 
 CHANGES 
+
+Version 2 Bug fix
+
+The covariance matrix of the algebraic parameters associated 
+with the original (unnormalised) coordinate system was incorrect due to 
+an oversight in the implementation. I incorrectly unit normalised a 
+parameter vector when I shouldn't have just before applying a critical 
+formula. 
+
+This issue did not affect the covariance matrix of the geometric 
+parameters, nor did it affect the covariance matrix of the algebraic 
+parameters in the normalised coordinate system. Hence, if you used the 
+normalised algebraic covariance matrix or the covariance matrix of the 
+geometric parameters for any subsequent calculations/propagations your 
+results are correct. However, if for some reason you utilised the 
+covariance of the algebraic parameters in the original (unnormalised) 
+coordinate system then you would have had an inflated covariance matrix. 
+That is, your error bars would have been greater than they needed to be. 
+
+The issue has been resolved in the current release. 
+
+
 
 Version 1 Initial submission 
 
@@ -39,10 +62,7 @@ all its sub-folders to the matlab path. Then execute run_example.
 This will run the guaranteed ellipse fit and the direct ellipse fit on 
 synthetic data and produce a graph comparing the two methods. 
 
-Additional examples are provided in the Inteferometer Data Examples
-folder. Running the examples in that folder will also produce tables
-showing the geometric parameters, the geometric covariance matrix and
-the algebraic covariance matrix. 
+
 
 KNOWN ISSUES 
 

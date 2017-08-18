@@ -188,10 +188,10 @@ pinvM = V*D*U';
 covarianceMatrixNormalisedSpace = Pt*pinvM*Pt;
 
 % transform covariance matrix from normalised coordinate system
-% back to the original coordinate system
-t = algebraicEllipseParameters / norm(algebraicEllipseParameters);                            
-F = E \ P34*pinv(D3)*kron(T,T)'*D3*P34*E;                
-P = eye(6) - norm(t)^2*(t*t'); 
+% back to the original coordinate system                         
+F = E \ P34*pinv(D3)*kron(T,T)'*D3*P34*E;    
+t = F*algebraicEllipseParametersNormalisedSpace;
+P = eye(6) - (t*t')/norm(t)^2;
 covarianceMatrix = ...
           norm(t)^-2* P*F*covarianceMatrixNormalisedSpace*F'*P;
 
